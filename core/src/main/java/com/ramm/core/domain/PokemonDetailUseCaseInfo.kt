@@ -4,8 +4,7 @@ data class PokemonDetailUseCaseInfo(
     val height: Int,
     val weight: Int,
     val name: String,
-    val description: String,
-    val sprite: SpritesUseCaseInfo,
+    val sprites: SpritesUseCaseInfo,
     val types: List<TypesUseCaseInfo>,
     val stats: List<StatsUseCaseInfo>
 )

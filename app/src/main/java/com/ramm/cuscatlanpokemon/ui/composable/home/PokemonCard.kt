@@ -47,7 +47,7 @@ fun PokemonCard(pokemon: PokemonEntriesUseCaseInfo) {
             Spacer(modifier = Modifier.weight(1f))
 
             Image(
-                painter = rememberAsyncImagePainter(pokemon.pokemonSpecies.urlImage),
+                painter = rememberAsyncImagePainter(pokemon.urlImage),
                 contentDescription = pokemon.pokemonSpecies.name,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier

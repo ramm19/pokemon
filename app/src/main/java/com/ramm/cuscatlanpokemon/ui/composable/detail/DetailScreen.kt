@@ -41,7 +41,7 @@ fun DetailScreen(){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     ImageTypePokemon(
-                        detailPokemon?.sprite?.other?.home?.frontDefault ?: "",
+                        detailPokemon?.sprites?.other?.home?.frontDefault ?: "",
                         detailPokemon?.types ?: emptyList()
                     )
                 }

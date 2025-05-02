@@ -6,10 +6,10 @@ data class PokemonUseCaseInfo(
 
 data class PokemonEntriesUseCaseInfo(
     val entryNumber: Int,
+    var urlImage: String,
     val pokemonSpecies: PokemonSpeciesUseCaseInfo
 )
 
 data class PokemonSpeciesUseCaseInfo(
-    val name: String,
-    var urlImage: String
+    val name: String
 )

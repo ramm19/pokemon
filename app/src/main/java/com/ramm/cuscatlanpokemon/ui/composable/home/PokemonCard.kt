@@ -20,10 +20,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import com.ramm.core.domain.PokemonEntriesUseCaseInfo
 import com.ramm.core.domain.PokemonUseCaseInfo
 
 @Composable
-fun PokemonCard(pokemon: PokemonUseCaseInfo) {
+fun PokemonCard(pokemon: PokemonEntriesUseCaseInfo) {
     BoxWithConstraints (
         modifier = Modifier
             .aspectRatio(1f)
@@ -37,7 +38,7 @@ fun PokemonCard(pokemon: PokemonUseCaseInfo) {
                 .fillMaxSize()
         ) {
             Text(
-                text = pokemon.id,
+                text = "#${pokemon.entryNumber}",
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
                     .align(Alignment.End)
@@ -46,8 +47,8 @@ fun PokemonCard(pokemon: PokemonUseCaseInfo) {
             Spacer(modifier = Modifier.weight(1f))
 
             Image(
-                painter = rememberAsyncImagePainter(pokemon.imageUrl),
-                contentDescription = pokemon.name,
+                painter = rememberAsyncImagePainter(pokemon.pokemonSpecies.urlImage),
+                contentDescription = pokemon.pokemonSpecies.name,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(boxWidth * 0.6f)
@@ -57,7 +58,7 @@ fun PokemonCard(pokemon: PokemonUseCaseInfo) {
             Spacer(modifier = Modifier.weight(1f))
 
             Text(
-                text = pokemon.name,
+                text = pokemon.pokemonSpecies.name,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.align(Alignment.Start)
             )

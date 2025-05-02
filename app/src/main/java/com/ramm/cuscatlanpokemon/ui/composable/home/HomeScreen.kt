@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ramm.core.domain.PokemonEntriesUseCaseInfo
 import com.ramm.core.domain.PokemonUseCaseInfo
 import com.ramm.cuscatlanpokemon.theme.CharcoalGray
 import com.ramm.cuscatlanpokemon.theme.DeepPetroleumBlue
@@ -45,14 +46,14 @@ import com.ramm.cuscatlanpokemon.theme.VeryLightGrey
 fun HomeScreen() {
 
     var search by remember { mutableStateOf("") }
-    val listPokemon = remember { mutableStateOf(listOf<PokemonUseCaseInfo>()) }
+    val listPokemon = remember { mutableStateOf(listOf<PokemonEntriesUseCaseInfo>()) }
     val listPokemonFilter = remember(search) {
         if (search.isBlank()) {
             listPokemon.value
         } else {
             listPokemon.value.filter {
-                it.id.contains(search, ignoreCase = true) ||
-                it.name.contains(search, ignoreCase = true)
+                it.entryNumber.toString().contains(search, ignoreCase = true) ||
+                it.pokemonSpecies.name.contains(search, ignoreCase = true)
             }
         }
     }

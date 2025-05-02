@@ -1,7 +1,15 @@
 package com.ramm.core.domain
 
 data class PokemonUseCaseInfo(
-    val id: String,
-    val imageUrl: String,
-    val name: String
+    val pokemonEntries: List<PokemonEntriesUseCaseInfo>
+)
+
+data class PokemonEntriesUseCaseInfo(
+    val entryNumber: Int,
+    val pokemonSpecies: PokemonSpeciesUseCaseInfo
+)
+
+data class PokemonSpeciesUseCaseInfo(
+    val name: String,
+    var urlImage: String
 )

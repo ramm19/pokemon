@@ -80,7 +80,11 @@ fun ProfileImageSelector() {
                     .background(LightGrey),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(64.dp))
+                Icon(
+                    modifier = Modifier.size(64.dp),
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null
+                )
             }
         }
 

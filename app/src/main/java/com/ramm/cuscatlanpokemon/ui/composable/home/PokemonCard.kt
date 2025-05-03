@@ -2,6 +2,7 @@ package com.ramm.cuscatlanpokemon.ui.composable.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,16 +20,24 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.ramm.core.domain.PokemonEntriesUseCaseInfo
-import com.ramm.core.domain.PokemonUseCaseInfo
+import com.ramm.cuscatlanpokemon.ui.interactions.PokemonIntent
 
 @Composable
-fun PokemonCard(pokemon: PokemonEntriesUseCaseInfo) {
+fun PokemonCard(
+    pokemon: PokemonEntriesUseCaseInfo,
+    onIntent: (PokemonIntent) -> Unit,
+    goToDetail: () -> Unit
+) {
     BoxWithConstraints (
         modifier = Modifier
             .aspectRatio(1f)
             .background(LightGray, RoundedCornerShape(12.dp))
+            .clickable {
+                onIntent(PokemonIntent.Reduce.SetSelectedPokemon(pokemon))
+                onIntent(PokemonIntent.Screen.GetDetailPokemon(pokemon.entryNumber))
+                goToDetail()
+            }
             .padding(8.dp)
     ) {
         val boxWidth = maxWidth

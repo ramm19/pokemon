@@ -22,26 +22,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ramm.cuscatlanpokemon.preferences
 import com.ramm.cuscatlanpokemon.ui.composable.common.TextFieldProfile
 import com.ramm.cuscatlanpokemon.ui.composable.common.TypeError
+import com.ramm.cuscatlanpokemon.ui.interactions.PokemonIntent
+import com.ramm.cuscatlanpokemon.ui.viewstate.PokemonViewState
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.Calendar
 
 @Composable
-fun ProfileScreen() {
-
-    //todo agregar preferences
-    //todo guardar en archivo string
+fun ProfileScreen(
+    viewState: PokemonViewState,
+    onIntent: (PokemonIntent) -> Unit,
+    goBack: () -> Unit
+) {
     val context = LocalContext.current
     val documentAdultName = "DUI *"
     val documentChildName = "Carnet de minoridad"
-
-    var name by remember { mutableStateOf("") }
-    var hobby by remember { mutableStateOf("") }
-    var birthDate by remember { mutableStateOf("") }
-    var document by remember { mutableStateOf("") }
 
     var nameEmptyError by remember { mutableStateOf(false) }
     var birthDateEmptyError by remember { mutableStateOf(false) }
@@ -54,7 +51,9 @@ fun ProfileScreen() {
         DatePickerDialog(
             context,
             { _, year, month, dayOfMonth ->
-                birthDate = "$dayOfMonth/${month + 1}/$year"
+                onIntent(
+                    PokemonIntent.Reduce.SetBirthDate("$dayOfMonth/${month + 1}/$year")
+                )
                 isAdult = askIsAdult(dayOfMonth, month + 1, year)
             },
             calendar.get(Calendar.YEAR),
@@ -65,6 +64,7 @@ fun ProfileScreen() {
         }
     }
 
+    val document = viewState.document
     val formattedDocument = remember(document) {
         if (document.length <= 8 || !isAdult) {
             document
@@ -84,15 +84,17 @@ fun ProfileScreen() {
             text = "Perfil",
             style = MaterialTheme.typography.titleLarge
         )
-        ProfileImageSelector()
+        ProfileImageSelector(viewState.imagePath, onIntent)
         TextFieldProfile(
             label = "Nombre *",
             hint = "Nombre",
-            value = name,
+            value = viewState.name,
             isError = nameEmptyError,
             typeError = TypeError.REQUIRED,
             onValueChange = {
-                name = it
+                onIntent(
+                    PokemonIntent.Reduce.SetName(it)
+                )
                 nameEmptyError = it.isEmpty()
             }
         )
@@ -102,9 +104,11 @@ fun ProfileScreen() {
             hint = "Pasatiempo favorito",
             singleLine = false,
             maxLines = 3,
-            value = hobby,
+            value = viewState.hobby,
             onValueChange = {
-                hobby = it
+                onIntent(
+                    PokemonIntent.Reduce.SetHobby(it)
+                )
             }
         )
         TextFieldProfile(
@@ -115,11 +119,13 @@ fun ProfileScreen() {
             enabled = false,
             label = "Fecha de nacimiento *",
             hint = "Fecha de nacimiento",
-            value = birthDate,
+            value = viewState.birthDate,
             isError = birthDateEmptyError,
             typeError = TypeError.REQUIRED,
             onValueChange = {
-                birthDate = it
+                onIntent(
+                    PokemonIntent.Reduce.SetBirthDate(it)
+                )
                 birthDateEmptyError = it.isEmpty()
             }
         )
@@ -134,13 +140,18 @@ fun ProfileScreen() {
             isError = documentEmptyError || documentFormatError,
             typeError = if (documentEmptyError) TypeError.REQUIRED else TypeError.BAD_FORMAT_DUI,
             onValueChange = {
-                document = it
                 if (isAdult) {
                     val digitsOnly = it.filter { it.isDigit() }
                     documentEmptyError = digitsOnly.isEmpty()
                     if (digitsOnly.length <= 9) {
-                        document = digitsOnly
+                        onIntent(
+                            PokemonIntent.Reduce.SetDocument(digitsOnly)
+                        )
                     }
+                } else {
+                    onIntent(
+                        PokemonIntent.Reduce.SetDocument(it)
+                    )
                 }
             }
         )
@@ -148,11 +159,10 @@ fun ProfileScreen() {
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                preferences.savedProfile = true
-                preferences.nameProfile = name
-                preferences.hobby = hobby
-                preferences.birthDay = birthDate
-                preferences.document = document
+                if (!nameEmptyError && !birthDateEmptyError) {
+                    onIntent(PokemonIntent.Screen.SaveDataProfile)
+                    goBack()
+                }
             }
         ) {
             Text(text = "Guardar")
@@ -170,5 +180,6 @@ fun askIsAdult (day: Int, month: Int, year: Int): Boolean {
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    val fakeViewState = PokemonViewState()
+    ProfileScreen(fakeViewState, {}) {}
 }

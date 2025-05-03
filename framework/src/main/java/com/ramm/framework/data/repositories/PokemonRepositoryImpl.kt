@@ -1,8 +1,5 @@
 package com.ramm.framework.data.repositories
 
-import com.ramm.core.domain.PokemonDetailUseCaseInfo
-import com.ramm.core.domain.PokemonUseCaseInfo
-import com.ramm.core.domain.Result
 import com.ramm.core.repositories.PokemonRepository
 import com.ramm.framework.data.repositories.base.BaseRepository
 import com.ramm.framework.service.PokemonService

@@ -1,5 +1,6 @@
 package com.ramm.framework.di
 
+import com.itkacher.okprofiler.BuildConfig
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import com.ramm.framework.service.PokemonService
 import com.ramm.framework.utils.NORMAL
@@ -8,7 +9,6 @@ import com.ramm.framework.utils.TIMEOUT_SECONDS
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.compose.BuildConfig
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Converter

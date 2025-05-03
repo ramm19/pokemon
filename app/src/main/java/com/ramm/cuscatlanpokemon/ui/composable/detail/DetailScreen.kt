@@ -20,12 +20,14 @@ import com.ramm.core.domain.PokemonDetailUseCaseInfo
 import com.ramm.cuscatlanpokemon.theme.DarkGray
 import com.ramm.cuscatlanpokemon.theme.DarkNavyBlue
 import com.ramm.cuscatlanpokemon.theme.VeryLightGrey
+import com.ramm.cuscatlanpokemon.ui.interactions.PokemonIntent
+import com.ramm.cuscatlanpokemon.ui.viewstate.PokemonViewState
 
 @Composable
-fun DetailScreen(){
-    //todo agregar preferences
-
-    val detailPokemon : PokemonDetailUseCaseInfo? by remember { mutableStateOf(null) }
+fun DetailScreen(
+    viewState: PokemonViewState,
+    onIntent: (PokemonIntent) -> Unit
+){
 
     Column(
         modifier = Modifier
@@ -41,8 +43,8 @@ fun DetailScreen(){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     ImageTypePokemon(
-                        detailPokemon?.sprites?.other?.home?.frontDefault ?: "",
-                        detailPokemon?.types ?: emptyList()
+                        viewState.detailPokemon?.sprites?.other?.home?.frontDefault ?: "",
+                        viewState.detailPokemon?.types ?: emptyList()
                     )
                 }
             }
@@ -51,8 +53,8 @@ fun DetailScreen(){
         PokemonDetailMeasure(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 12.dp),
-            height = "${(detailPokemon?.height ?: 0).toDouble() / 10.0} m",
-            weight = "${(detailPokemon?.weight ?: 0).toDouble() / 10.0} kg"
+            height = "${(viewState.detailPokemon?.height ?: 0).toDouble() / 10.0} m",
+            weight = "${(viewState.detailPokemon?.weight ?: 0).toDouble() / 10.0} kg"
         )
 
         Text(
@@ -75,7 +77,7 @@ fun DetailScreen(){
         PokemonDetailStats(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
-            stats = detailPokemon?.stats ?: emptyList()
+            stats = viewState.detailPokemon?.stats ?: emptyList()
         )
     }
 }
@@ -83,5 +85,6 @@ fun DetailScreen(){
 @Preview
 @Composable
 fun DetailScreenPreview(){
-    DetailScreen()
+    val fakeViewState = PokemonViewState()
+    DetailScreen(fakeViewState){}
 }

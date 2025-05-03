@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ramm.cuscatlanpokemon.preferences
 import com.ramm.cuscatlanpokemon.ui.composable.common.TextFieldProfile
 import com.ramm.cuscatlanpokemon.ui.composable.common.TypeError
 import java.time.LocalDate
@@ -34,7 +35,6 @@ fun ProfileScreen() {
     //todo agregar preferences
     //todo guardar en archivo string
     val context = LocalContext.current
-    val adultAge = 18
     val documentAdultName = "DUI *"
     val documentChildName = "Carnet de minoridad"
 
@@ -148,7 +148,11 @@ fun ProfileScreen() {
         Button(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-
+                preferences.savedProfile = true
+                preferences.nameProfile = name
+                preferences.hobby = hobby
+                preferences.birthDay = birthDate
+                preferences.document = document
             }
         ) {
             Text(text = "Guardar")

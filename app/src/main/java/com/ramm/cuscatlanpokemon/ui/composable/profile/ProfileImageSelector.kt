@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.ramm.cuscatlanpokemon.preferences
 import com.ramm.cuscatlanpokemon.theme.LightGrey
 import com.ramm.cuscatlanpokemon.theme.MediumGray
 import com.ramm.cuscatlanpokemon.utils.FileManager.saveImageToInternalStorage
@@ -53,6 +54,7 @@ fun ProfileImageSelector() {
             if (savedPath != null) {
                 imagePath = savedPath
                 imageUri = it
+                preferences.pathFile = savedPath
             }
         }
     }

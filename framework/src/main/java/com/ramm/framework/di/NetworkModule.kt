@@ -1,6 +1,5 @@
 package com.ramm.framework.di
 
-import com.google.gson.GsonBuilder
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import com.ramm.framework.service.PokemonService
 import com.ramm.framework.utils.NORMAL
@@ -17,7 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-val netwoekModule = module {
+val networkModule = module {
     single { GsonConverterFactory.create() as Converter.Factory }
     single { HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY) as Interceptor }
 

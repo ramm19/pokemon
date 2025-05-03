@@ -19,6 +19,7 @@ okhttpProfiler = "1.0.8"
 lifecycle = "2.8.7"
 coroutines = "1.7.3"
 coil = "2.2.2"
+security = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -51,6 +52,7 @@ androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+androidx-security = { group = "androidx.security", name = "security-crypto", version.ref = "security" }
 
 [bundles]
 compose-core = [

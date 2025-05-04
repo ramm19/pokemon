@@ -23,6 +23,7 @@ import com.ramm.cuscatlanpokemon.theme.MintGreen
 fun BackgroundComposable(
     modifier: Modifier = Modifier,
     topContent: @Composable () -> Unit,
+    pickMyTeamContent: @Composable () -> Unit,
     backgroundColor: Color = MintGreen
 ) {
     Box (modifier = modifier.fillMaxWidth()) {
@@ -30,14 +31,15 @@ fun BackgroundComposable(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 32.dp)
                 .heightIn(min = 0.dp)
                 .align(Alignment.BottomCenter)
-                .height(LocalConfiguration.current.screenHeightDp.dp / 4)
+                .height(LocalConfiguration.current.screenHeightDp.dp / 5)
                 .clip(RoundedCornerShape(32.dp))
                 .background(backgroundColor)
         )
 
         topContent()
+        pickMyTeamContent()
     }
 }

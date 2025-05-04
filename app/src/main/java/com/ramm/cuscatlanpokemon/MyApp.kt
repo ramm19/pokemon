@@ -2,7 +2,11 @@ package com.ramm.cuscatlanpokemon
 
 import android.annotation.SuppressLint
 import android.app.Application
+import coil.Coil
+import coil.ImageLoader
+import coil.util.DebugLogger
 import com.ramm.core.di.interactionModule
+import com.ramm.cuscatlanpokemon.BuildConfig
 import com.ramm.cuscatlanpokemon.di.appModule
 import com.ramm.cuscatlanpokemon.di.mainModule
 import com.ramm.framework.data.preferences.ConstantsEncrypt
@@ -21,7 +25,7 @@ val preferences: InitSharedPreferencesImpl by lazy { MyApp.prefs!! }
 class MyApp : Application() {
 
     private val appModules = listOf(appModule, mainModule)
-    private val frameworkModules = listOf(networkModule, repositoryModule)
+    private val frameworkModules = listOf(networkModule(BuildConfig.IS_DEBUG), repositoryModule)
     private val coreModules = listOf<Module>(interactionModule)
 
     companion object {
@@ -43,13 +47,23 @@ class MyApp : Application() {
         )
 
         startKoinModules()
+        loggerCoil()
     }
 
     private fun startKoinModules() {
         startKoin {
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@MyApp)
             modules(appModules + frameworkModules + coreModules)
         }
+    }
+
+    private fun loggerCoil(){
+        Coil.setImageLoader(
+            ImageLoader.Builder(applicationContext)
+                .logger(DebugLogger())
+                .build()
+        )
     }
 
 }

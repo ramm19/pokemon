@@ -1,7 +1,10 @@
 package com.ramm.cuscatlanpokemon.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -23,15 +26,36 @@ class PokemonAppState(
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route
             ?: ""
 
-    private var _toolbarTitle: String = ""
+    var typeToolbar by mutableStateOf(ToolbarEnum.MAIN)
+        private set
 
-    fun setToolbarTitle(title: String) {
-        _toolbarTitle = title
+    var toolbarTitle by mutableStateOf("")
+        private set
+
+    var idPokemon by mutableStateOf("")
+        private set
+
+    fun updateToolbar(toolbar: ToolbarEnum) {
+        typeToolbar = toolbar
     }
 
-    fun getToolbarTitle() = _toolbarTitle
+    fun updateToolbarTitle(title: String) {
+        toolbarTitle = title
+    }
+
+    fun updateIdPokemon(id: String) {
+        idPokemon = id
+    }
 
     fun onUpClick() {
         navController.popBackStack()
     }
+
+    var goToProfile: () -> Unit by mutableStateOf({})
+}
+
+enum class ToolbarEnum {
+    MAIN,
+    BACK,
+    NONE
 }

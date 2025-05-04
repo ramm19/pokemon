@@ -1,6 +1,9 @@
 package com.ramm.cuscatlanpokemon.ui.composable.detail
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -25,8 +29,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.ramm.core.domain.TypesTypeUseCaseInfo
 import com.ramm.core.domain.TypesUseCaseInfo
+import com.ramm.cuscatlanpokemon.theme.AmberOrange
+import com.ramm.cuscatlanpokemon.theme.ElectricPurple
 import com.ramm.cuscatlanpokemon.theme.MediumGray
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun ImageTypePokemon(
     imageUrl: String,
@@ -34,19 +41,22 @@ fun ImageTypePokemon(
 ) {
     BoxWithConstraints(
         modifier = Modifier
-            .aspectRatio(1f)
+            .fillMaxWidth()
             .padding(8.dp)
     ) {
 
-        val boxWidth = maxWidth
+        val imageSize = maxWidth * 0.8f
+        val columnHeight = maxWidth * 0.9f
+
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .height(columnHeight)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 modifier = Modifier
-                    .size(boxWidth * 0.6f)
-                    .align(Alignment.CenterHorizontally),
+                    .size(imageSize),
                 painter = rememberAsyncImagePainter(imageUrl),
                 contentDescription = null,
                 contentScale = ContentScale.Fit

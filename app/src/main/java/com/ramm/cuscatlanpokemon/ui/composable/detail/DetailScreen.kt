@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ramm.core.domain.PokemonDetailUseCaseInfo
+import com.ramm.cuscatlanpokemon.theme.BrightRedOrange
 import com.ramm.cuscatlanpokemon.theme.DarkGray
 import com.ramm.cuscatlanpokemon.theme.DarkNavyBlue
 import com.ramm.cuscatlanpokemon.theme.VeryLightGrey
@@ -33,13 +36,14 @@ fun DetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(color = VeryLightGrey)
+            .verticalScroll(rememberScrollState())
     ) {
         BackgroundComposable(
             topContent = {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(horizontal = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     ImageTypePokemon(
@@ -47,19 +51,27 @@ fun DetailScreen(
                         viewState.detailPokemon?.types ?: emptyList()
                     )
                 }
+            },
+            pickMyTeamContent = {
+                PickMyTeam(
+                    modifier = Modifier
+                        .padding(top = 8.dp, end = 32.dp),
+                    viewState = viewState,
+                    onIntent = onIntent
+                )
             }
         )
 
         PokemonDetailMeasure(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 32.dp, vertical = 12.dp),
             height = "${(viewState.detailPokemon?.height ?: 0).toDouble() / 10.0} m",
             weight = "${(viewState.detailPokemon?.weight ?: 0).toDouble() / 10.0} kg"
         )
 
         Text(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 32.dp, vertical = 16.dp),
             text = "Este Pokémon tiene plantado un bulbo en el lomo desde que nace. Esta semilla crece y se desarrolla a lo largo del ciclo de vida de Bulbasaur a medida que suceden sus evoluciones. El bulbo absorbe y almacena la energía solar que Bulbasaur necesita para crecer.",
             color = DarkGray,
             style = MaterialTheme.typography.labelMedium
@@ -67,7 +79,7 @@ fun DetailScreen(
 
         Text(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 32.dp, vertical = 16.dp),
             text = "Estadísticas",
             color = DarkNavyBlue,
             style = MaterialTheme.typography.titleLarge,
@@ -76,7 +88,7 @@ fun DetailScreen(
 
         PokemonDetailStats(
             modifier = Modifier
-                .padding(horizontal = 16.dp),
+                .padding(start = 32.dp, end = 32.dp, bottom = 32.dp),
             stats = viewState.detailPokemon?.stats ?: emptyList()
         )
     }

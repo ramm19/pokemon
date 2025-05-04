@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PokemonService {
-    @GET("podedex/kanto")
+    @GET("pokedex/kanto")
     suspend fun getAllPokemonFirstGeneration() : Response<PokemonResponseData>
 
     @GET("pokemon/{id}")

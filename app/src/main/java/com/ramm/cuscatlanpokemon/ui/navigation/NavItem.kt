@@ -2,31 +2,21 @@ package com.ramm.cuscatlanpokemon.ui.navigation
 
 enum class NavItem(
     val navCommand: NavCommand,
-    val title: String,
-    val toolbar: ToolbarEnum
+    val title: String
 ) {
     HOME(
         NavCommand.ContentHome(Feature.HOME),
-        "Pokédex",
-        ToolbarEnum.MAIN
+        "Pokédex"
     ),
 
     DETAIL(
         NavCommand.ContentDetail(Feature.HOME),
-        "pok",
-        ToolbarEnum.BACK
+        "pok"
     ),
 
     PROFILE(
         NavCommand.ContentProfile(Feature.HOME),
-        "Perfil",
-        ToolbarEnum.BACK
+        "Perfil"
     )
 
-}
-
-
-enum class ToolbarEnum {
-    MAIN,
-    BACK
 }

@@ -6,20 +6,13 @@ import com.ramm.cuscatlanpokemon.ui.interactions.PokemonIntent
 import com.ramm.cuscatlanpokemon.ui.viewmodels.PokemonViewModel
 
 class GetDataProfileAction(
-    private val viewmodel: PokemonViewModel,
+    private val viewModel: PokemonViewModel,
 ) : Action {
     override suspend fun execute() {
-        viewmodel.onIntent(PokemonIntent.Reduce.SetName(preferences.nameProfile))
-        viewmodel.onIntent(PokemonIntent.Reduce.SetHobby(preferences.hobby))
-        viewmodel.onIntent(PokemonIntent.Reduce.SetBirthDate(preferences.birthDay))
-        viewmodel.onIntent(PokemonIntent.Reduce.SetDocument(preferences.document))
-        viewmodel.onIntent(PokemonIntent.Reduce.SetImagePath(preferences.pathFile))
-
-        val favorites = preferences.myFavorites
-        val listFavorites : List<Int> = if (favorites.isBlank())
-            emptyList()
-        else
-            favorites.split(",").map { it.toInt() }
-        viewmodel.onIntent(PokemonIntent.Reduce.SetListFavoritePokemon(listFavorites))
+        viewModel.onIntent(PokemonIntent.Reduce.SetName(preferences.nameProfile))
+        viewModel.onIntent(PokemonIntent.Reduce.SetHobby(preferences.hobby))
+        viewModel.onIntent(PokemonIntent.Reduce.SetBirthDate(preferences.birthDay))
+        viewModel.onIntent(PokemonIntent.Reduce.SetDocument(preferences.document))
+        viewModel.onIntent(PokemonIntent.Reduce.SetImagePath(preferences.pathFile))
     }
 }

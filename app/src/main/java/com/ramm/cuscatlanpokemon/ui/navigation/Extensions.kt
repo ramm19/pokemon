@@ -6,6 +6,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import kotlin.getValue
 
 fun NavGraphBuilder.composable(
@@ -20,8 +23,13 @@ fun NavGraphBuilder.composable(
     }
 }
 
-inline fun <reified T> getKoinInstance(): T {
-    return object: KoinComponent {
-        val value: T by inject()
-    }.value
+fun formatIdPokemon(id: Int): String = String.format("#%03d", id)
+
+fun getDateFormatter(date: String) : LocalDate? {
+    val formatter = DateTimeFormatter.ofPattern("d/M/yyyy")
+    return try {
+        LocalDate.parse(date, formatter)
+    } catch (e: DateTimeParseException) {
+        null
+    }
 }

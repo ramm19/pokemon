@@ -1,5 +1,7 @@
 package com.ramm.cuscatlanpokemon.ui.actions
 
+import android.util.Log
+import com.ramm.core.domain.PokemonEntriesUseCaseInfo
 import com.ramm.cuscatlanpokemon.preferences
 import com.ramm.cuscatlanpokemon.ui.base.Action
 import com.ramm.cuscatlanpokemon.ui.interactions.PokemonIntent
@@ -32,8 +34,20 @@ class EditFavoritePokemonAction(
             }
         }
 
-        viewModel.onIntent(PokemonIntent.Reduce.SetListFavoritePokemon(listFavorites.toList()))
-        preferences.myFavorites = listFavorites.joinToString(",")
+        val listFavoritesData = mutableListOf<PokemonEntriesUseCaseInfo>()
+        listFavorites.forEach { idPokemon ->
+            viewModel.currentState.listPokemon.firstOrNull() { pokemon ->
+                pokemon.entryNumber == idPokemon
+            }?.let {
+                listFavoritesData.add(it)
+            }
+        }
 
+        viewModel.onIntent(PokemonIntent.Reduce.SetListFavoritePokemon(
+            listFavorites.toList(),
+            listFavoritesData
+        ))
+        preferences.myFavorites = listFavorites.joinToString(",")
+        Log.d("ramm", "mis favoritos ${preferences.myFavorites}")
     }
 }

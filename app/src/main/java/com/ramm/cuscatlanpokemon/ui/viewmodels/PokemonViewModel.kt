@@ -16,12 +16,10 @@ class PokemonViewModel(
 ) : MVIViewModel<PokemonViewState, PokemonCommand, PokemonIntent>() {
 
     init {
-        Log.d("PokemonVM", "Initial state: $viewState")
-        Log.d("PokemonVM", "Init llamado")
-        onIntent(PokemonIntent.Reduce.SetSearch("hola"))
+        initState(PokemonViewState())
+        onIntent(PokemonIntent.Screen.GetDataProfile)
     }
 
-    override val initialState = PokemonViewState()
 
     override suspend fun handleIntent(intent: PokemonIntent) {
         viewModelScope.launch {

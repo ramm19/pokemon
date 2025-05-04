@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import com.ramm.cuscatlanpokemon.ui.PokemonAppState
+import com.ramm.cuscatlanpokemon.ui.ToolbarEnum
 import com.ramm.cuscatlanpokemon.ui.composable.detail.DetailScreen
 import com.ramm.cuscatlanpokemon.ui.composable.home.HomeScreen
 import com.ramm.cuscatlanpokemon.ui.composable.profile.ProfileScreen
@@ -29,10 +30,13 @@ fun NavGraphBuilder.homeGraph (
                 }
             )
             val viewState by pokemonViewModel.viewState.collectAsState()
-            Log.d("Compose", "Collecting viewState: $viewState")
+            Log.d("ramm", "Collecting viewState: $viewState")
 
-            LaunchedEffect(viewState) {
-                Log.d("ViewState", "State updated: $viewState")
+            appState.updateToolbar(ToolbarEnum.MAIN)
+            appState.goToProfile = {
+                appState.navController.navigate(
+                    NavCommand.ContentProfile(Feature.HOME).route
+                )
             }
             HomeScreen(
                 viewState = viewState,
@@ -57,7 +61,10 @@ fun NavGraphBuilder.homeGraph (
                 }
             )
             val viewState by pokemonViewModel.viewState.collectAsState()
-            appState.setToolbarTitle(viewState.selectedPokemon?.pokemonSpecies?.name ?: "")
+
+            appState.updateToolbar(ToolbarEnum.BACK)
+            appState.updateToolbarTitle(viewState.selectedPokemon?.pokemonSpecies?.name ?: "")
+            appState.updateIdPokemon(formatIdPokemon(viewState.selectedPokemon?.entryNumber ?: 0))
             DetailScreen(
                 viewState = viewState,
                 onIntent = { intent -> pokemonViewModel.onIntent(intent) }
@@ -71,10 +78,16 @@ fun NavGraphBuilder.homeGraph (
                 }
             )
             val viewState by pokemonViewModel.viewState.collectAsState()
+            appState.updateToolbar(ToolbarEnum.NONE)
             ProfileScreen(
                 viewState = viewState,
                 onIntent = { intent -> pokemonViewModel.onIntent(intent) },
-                goBack = { appState.onUpClick() }
+                goBack = { appState.onUpClick() },
+                goToDetail = {
+                    appState.navController.navigate(
+                        NavCommand.ContentDetail(Feature.HOME).route
+                    )
+                }
             )
         }
     }

@@ -35,6 +35,7 @@ import java.io.File
 
 @Composable
 fun ProfileImageSelector(
+    modifier: Modifier = Modifier,
     imagePath: String,
     onIntent: (PokemonIntent) -> Unit
 ) {
@@ -45,8 +46,8 @@ fun ProfileImageSelector(
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
     ) { uri: Uri? ->
-        uri.let {
-            val savedPath = saveImageToInternalStorage(context, it!!)
+        uri?.let {
+            val savedPath = saveImageToInternalStorage(context, it)
             if (savedPath != null) {
                 onIntent(PokemonIntent.Reduce.SetImagePath(savedPath))
                 //imageUri = it
@@ -56,12 +57,11 @@ fun ProfileImageSelector(
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(24.dp),
+        modifier = modifier
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (imageFile?.exists() == null) {
+        if (imageFile.exists() == true) {
             Image(
                 painter = rememberAsyncImagePainter(imageFile),
                 contentDescription = "Foto de perfil",
@@ -99,5 +99,5 @@ fun ProfileImageSelector(
 @Preview
 @Composable
 fun ProfileImageSelectorPreview() {
-    ProfileImageSelector("") {}
+    ProfileImageSelector(Modifier, "") {}
 }

@@ -33,7 +33,6 @@ fun TextFieldProfile(
     TextField(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 16.dp)
             .border(width = 1.dp, color = DarkGray, shape = MaterialTheme.shapes.small),
         enabled = enabled,
         value = value,

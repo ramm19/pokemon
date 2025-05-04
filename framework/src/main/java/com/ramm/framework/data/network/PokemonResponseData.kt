@@ -23,7 +23,7 @@ data class PokemonEntriesResponseData(
 ) : DomainMapper<PokemonEntriesUseCaseInfo> {
     override fun mapToDomainModel() = PokemonEntriesUseCaseInfo (
         entryNumber = entryNumber,
-        urlImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${entryNumber}.png\"",
+        urlImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${entryNumber}.png",
         pokemonSpecies = pokemonSpecies.mapToDomainModel()
     )
 }

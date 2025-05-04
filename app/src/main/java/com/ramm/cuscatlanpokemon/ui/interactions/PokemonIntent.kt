@@ -19,7 +19,10 @@ sealed class PokemonIntent {
         data class SetListPokemon(val listPokemon: List<PokemonEntriesUseCaseInfo>) : Reduce()
         data class SetListPokemonFilter(val listPokemonFilter: List<PokemonEntriesUseCaseInfo>) : Reduce()
         data class SetDetailPokemon(val detailPokemon: PokemonDetailUseCaseInfo) : Reduce()
-        data class SetListFavoritePokemon(val listFavoritePokemon: List<Int>) : Reduce()
+        data class SetListFavoritePokemon(
+            val listFavoritePokemon: List<Int>,
+            val listFavoritePokemonData: List<PokemonEntriesUseCaseInfo>
+        ) : Reduce()
         data class SetName(val name: String) : Reduce()
         data class SetHobby(val hobby: String) : Reduce()
         data class SetBirthDate(val birthDate: String) : Reduce()

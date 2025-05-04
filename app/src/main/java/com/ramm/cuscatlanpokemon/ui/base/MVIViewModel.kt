@@ -11,12 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 abstract class MVIViewModel<VIEWSTATE, VIEWCOMMAND, VIEWINTENT>: ViewModel() {
-    private val _viewState = MutableStateFlow(initialState)
-
-    @CallSuper
-    protected fun setState(state: VIEWSTATE) {
-        _viewState.value = state
-    }
+    private lateinit var _viewState: MutableStateFlow<VIEWSTATE>
 
     val viewState: StateFlow<VIEWSTATE>
         get() = _viewState
@@ -24,7 +19,14 @@ abstract class MVIViewModel<VIEWSTATE, VIEWCOMMAND, VIEWINTENT>: ViewModel() {
     val currentState: VIEWSTATE
         get() = _viewState.value
 
-    abstract val initialState: VIEWSTATE
+    @CallSuper
+    protected fun setState(state: VIEWSTATE) {
+        _viewState.value = state
+    }
+
+    protected fun initState(state: VIEWSTATE) {
+        _viewState = MutableStateFlow(state)
+    }
 
     private val _viewCommand by lazy {
         MutableSharedFlow<ConsumableValue<VIEWCOMMAND>>(

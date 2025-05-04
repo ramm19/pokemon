@@ -8,8 +8,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.ramm.cuscatlanpokemon.ui.BackTopAppBar
 import com.ramm.cuscatlanpokemon.ui.MainTopAppBar
 import com.ramm.cuscatlanpokemon.ui.PokemonAppState
+import com.ramm.cuscatlanpokemon.ui.ToolbarEnum
 import com.ramm.cuscatlanpokemon.ui.navigation.NavItem
 import com.ramm.cuscatlanpokemon.ui.navigation.Navigation
 import com.ramm.cuscatlanpokemon.ui.rememberPokemonAppState
@@ -23,13 +25,26 @@ fun PokemonApp(
         rememberTopAppBarState()
     )
 
-    val currentRoute = appState.currentRoute
-
     Scaffold(
         topBar = {
-            MainTopAppBar(
-                scrollBehavior = scrollBehavior
-            )
+            when(appState.typeToolbar){
+                ToolbarEnum.MAIN -> {
+                    MainTopAppBar(
+                        onProfileClick = appState.goToProfile
+                    )
+                }
+                ToolbarEnum.BACK -> {
+                    BackTopAppBar(
+                        title = appState.toolbarTitle,
+                        onBackClick = { appState.onUpClick() },
+                        idPokemon = appState.idPokemon,
+                        scrollBehavior = scrollBehavior
+                    )
+                }
+                ToolbarEnum.NONE -> {}
+            }
+
+
         }
     ) { padding ->
         Column(

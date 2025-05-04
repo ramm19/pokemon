@@ -24,7 +24,10 @@ class PokemonReducerFactory : ReducerFactory<PokemonIntent.Reduce, PokemonViewSt
             is PokemonIntent.Reduce.SetDocument -> SetDocumentReducer(intent.document)
             is PokemonIntent.Reduce.SetHobby -> SetHobbyReducer(intent.hobby)
             is PokemonIntent.Reduce.SetImagePath -> SetImagePathReducer(intent.imagePath)
-            is PokemonIntent.Reduce.SetListFavoritePokemon -> SetListFavoritePokemonReducer(intent.listFavoritePokemon)
+            is PokemonIntent.Reduce.SetListFavoritePokemon -> SetListFavoritePokemonReducer(
+                intent.listFavoritePokemon,
+                intent.listFavoritePokemonData
+            )
             is PokemonIntent.Reduce.SetListPokemon -> SetListPokemonReducer(intent.listPokemon)
             is PokemonIntent.Reduce.SetListPokemonFilter -> SetListPokemonFilterReducer(intent.listPokemonFilter)
             is PokemonIntent.Reduce.SetName -> SetNameReducer(intent.name)

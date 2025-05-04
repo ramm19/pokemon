@@ -10,6 +10,7 @@ data class PokemonViewState(
     val selectedPokemon: PokemonEntriesUseCaseInfo? = null,
     val detailPokemon: PokemonDetailUseCaseInfo? = null,
     val listFavoritePokemon: List<Int> = emptyList(),
+    val listFavoritePokemonData: List<PokemonEntriesUseCaseInfo> = emptyList(),
     val name: String = "",
     val hobby: String = "",
     val birthDate: String = "",

@@ -34,6 +34,7 @@ android {
 
 dependencies {
 
+    api(project(":core"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,6 +49,7 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.workmanager)
+    implementation(libs.androidx.security)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

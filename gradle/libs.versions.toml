@@ -9,7 +9,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 composeBom = "2025.04.01"
 composeActivity = "1.10.1"
-composeKoin = "3.1.3"
+composeKoin = "3.5.0"
 composeNavigation = "2.8.9"
 koin = "3.5.3"
 gson = "2.10.1"
@@ -18,6 +18,8 @@ okhttp3 = "4.10.0"
 okhttpProfiler = "1.0.8"
 lifecycle = "2.8.7"
 coroutines = "1.7.3"
+coil = "2.2.2"
+security = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +51,8 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+androidx-security = { group = "androidx.security", name = "security-crypto", version.ref = "security" }
 
 [bundles]
 compose-core = [
@@ -60,11 +64,13 @@ compose-core = [
     "compose-test-junit4",
     "androidx-activity-compose",
     "koin-androidx-compose",
-    "navigation-compose"
+    "navigation-compose",
+    "coil"
 ]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 

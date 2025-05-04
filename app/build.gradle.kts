@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -18,7 +19,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("boolean", "IS_DEBUG", "true")
+        }
         release {
+            buildConfigField("boolean", "IS_DEBUG", "false")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -38,11 +43,14 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
 
+    api(project(":core"))
+    api(project(":framework"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

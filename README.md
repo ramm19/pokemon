@@ -32,15 +32,26 @@ Aplicación Android desarrollada con Jetpack Compose como prueba técnica. Permi
 
 ## 📷 Capturas de pantalla
 
-- Home
-  ![Listado de pokémon](screenshots/list.png)
-- Busqueda
-  ![Busqueda](screenshots/search1.png) (screenshots/search2.png)
-- Información de pokemon
-  ![Info](screenshots/info.png)
-- Captura el pokémon y hazlo parte de tu equipo
-  ![Libre](screenshots/free.png) ![Capturado](screenshots/catch.png)
-- Perfil
-  ![Perfil](screenshots/profil.png)
-- Mi equipo
-  ![Equipo](screenshots/team.png)
+### Home
+
+  ![Listado de pokémon](screenshots/list.jpeg)
+  
+### Busqueda
+
+  ![Busqueda](screenshots/search1.jpeg) ![Busqueda2](screenshots/search2.jpeg)
+  
+### Información de pokemon
+
+  ![Info](screenshots/info.jpeg)
+
+### Captura el pokémon y hazlo parte de tu equipo
+
+  ![Libre](screenshots/free.jpeg) ![Capturado](screenshots/catch.jpeg)
+  
+### Perfil
+
+  ![Perfil](screenshots/profile.jpeg)
+  
+### Mi equipo
+
+  ![Equipo](screenshots/team.jpeg)

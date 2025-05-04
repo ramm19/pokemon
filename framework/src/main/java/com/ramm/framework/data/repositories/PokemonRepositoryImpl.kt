@@ -1,8 +1,6 @@
 package com.ramm.framework.data.repositories
 
-import com.ramm.core.domain.PokemonDetailUseCaseInfo
-import com.ramm.core.domain.PokemonUseCaseInfo
-import com.ramm.core.domain.Result
+import android.util.Log
 import com.ramm.core.repositories.PokemonRepository
 import com.ramm.framework.data.repositories.base.BaseRepository
 import com.ramm.framework.service.PokemonService
@@ -12,6 +10,7 @@ class PokemonRepositoryImpl(
     private val pokemonService: PokemonService
 ) : BaseRepository(), PokemonRepository {
     override suspend fun getAllPokemonFirstGeneration() = fetchData {
+        Log.d("ramm", "call service")
         pokemonService.getAllPokemonFirstGeneration().getData()
     }
 

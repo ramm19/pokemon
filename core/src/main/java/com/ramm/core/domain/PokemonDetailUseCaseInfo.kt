@@ -3,6 +3,7 @@ package com.ramm.core.domain
 data class PokemonDetailUseCaseInfo(
     val height: Int,
     val weight: Int,
+    val id: Int,
     val name: String,
     val sprites: SpritesUseCaseInfo,
     val types: List<TypesUseCaseInfo>,

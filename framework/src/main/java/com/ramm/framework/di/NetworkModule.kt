@@ -8,7 +8,7 @@ import com.ramm.framework.utils.TIMEOUT_SECONDS
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.compose.BuildConfig
+import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Converter
@@ -16,13 +16,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-val networkModule = module {
+fun networkModule(isDebug: Boolean): Module = module {
     single { GsonConverterFactory.create() as Converter.Factory }
     single { HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY) as Interceptor }
 
     single(named(NORMAL)) {
         OkHttpClient.Builder().apply {
-            if (BuildConfig.DEBUG) {
+            if (isDebug) {
                 addInterceptor(get() as Interceptor)
                     .callTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 addInterceptor(OkHttpProfilerInterceptor())

@@ -21,11 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -33,28 +29,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ramm.core.domain.PokemonEntriesUseCaseInfo
-import com.ramm.core.domain.PokemonUseCaseInfo
+import com.ramm.cuscatlanpokemon.preferences
 import com.ramm.cuscatlanpokemon.theme.CharcoalGray
 import com.ramm.cuscatlanpokemon.theme.DeepPetroleumBlue
 import com.ramm.cuscatlanpokemon.theme.GoldenYellow
 import com.ramm.cuscatlanpokemon.theme.MediumGray
 import com.ramm.cuscatlanpokemon.theme.Transparent
 import com.ramm.cuscatlanpokemon.theme.VeryLightGrey
+import com.ramm.cuscatlanpokemon.ui.interactions.PokemonIntent
+import com.ramm.cuscatlanpokemon.ui.viewstate.PokemonViewState
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    viewState: PokemonViewState,
+    onIntent: (PokemonIntent) -> Unit,
+    goToProfile: () -> Unit,
+    goToDetail: () -> Unit
+) {
 
-    var search by remember { mutableStateOf("") }
-    val listPokemon = remember { mutableStateOf(listOf<PokemonEntriesUseCaseInfo>()) }
-    val listPokemonFilter = remember(search) {
-        if (search.isBlank()) {
-            listPokemon.value
+    LaunchedEffect(true) {
+
+        if (preferences.nameProfile.isBlank()) {
+            goToProfile()
         } else {
-            listPokemon.value.filter {
-                it.entryNumber.toString().contains(search, ignoreCase = true) ||
-                it.pokemonSpecies.name.contains(search, ignoreCase = true)
-            }
+            onIntent(PokemonIntent.Screen.GetAllPokemonFirstGeneration)
         }
     }
 
@@ -84,10 +82,11 @@ fun HomeScreen() {
                 .fillMaxWidth()
                 .padding(vertical = 16.dp, horizontal = 16.dp)
                 .border(width = 1.dp, color = MediumGray, shape = MaterialTheme.shapes.extraLarge),
-            value = search,
+            value = viewState.search,
             textStyle = MaterialTheme.typography.labelLarge,
-            onValueChange = {
-                search = it
+            onValueChange = { newText ->
+                onIntent(PokemonIntent.Reduce.SetSearch(newText))
+                onIntent(PokemonIntent.Screen.DoSearchPokemon)
             },
             trailingIcon = {
                 Icon(
@@ -118,7 +117,7 @@ fun HomeScreen() {
         )
 
         when {
-            listPokemonFilter.isEmpty() -> {
+            viewState.listPokemonFilter.isEmpty() -> {
                 Text(
                     modifier = Modifier
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp),
@@ -128,7 +127,7 @@ fun HomeScreen() {
                     fontWeight = FontWeight.Bold
                 )
             }
-            search.isNotBlank() -> {
+            viewState.search.isNotBlank() -> {
                 Text(
                     modifier = Modifier
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp),
@@ -142,14 +141,20 @@ fun HomeScreen() {
         }
 
         LazyVerticalGrid(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
             columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            contentPadding = PaddingValues(4.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(listPokemonFilter) { pokemon ->
-                PokemonCard(pokemon = pokemon)
+            items(viewState.listPokemonFilter, key = { it.entryNumber }) { pokemon ->
+                PokemonCard(
+                    pokemon = pokemon,
+                    onIntent,
+                    goToDetail
+                )
             }
         }
     }
@@ -158,5 +163,6 @@ fun HomeScreen() {
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    val fakeViewState = PokemonViewState()
+    HomeScreen(fakeViewState, {}, {}){}
 }

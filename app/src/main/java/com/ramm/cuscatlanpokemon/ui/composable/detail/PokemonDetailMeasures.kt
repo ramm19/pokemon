@@ -18,9 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ramm.cuscatlanpokemon.R
 import com.ramm.cuscatlanpokemon.theme.DarkNavyBlue
 import com.ramm.cuscatlanpokemon.theme.SteelBlue
 
@@ -38,15 +40,16 @@ fun PokemonDetailMeasure(
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         OneMeasureDetailPokemon(
-            Icons.Default.DateRange,
+            ImageVector.vectorResource(R.drawable.ic_weight),
+            "Peso",
             weight,
-            "Peso"
+
         )
 
         OneMeasureDetailPokemon(
-            Icons.Default.Edit,
-            height,
-            "Altura"
+            ImageVector.vectorResource(R.drawable.ic_height),
+            "Altura",
+            height
         )
     }
 }

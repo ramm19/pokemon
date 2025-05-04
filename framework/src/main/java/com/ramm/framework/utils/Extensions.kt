@@ -1,5 +1,6 @@
 package com.ramm.framework.utils
 
+import android.util.Log
 import com.ramm.core.domain.DataSourceError
 import com.ramm.core.domain.Failure
 import com.ramm.core.domain.Result
@@ -20,10 +21,13 @@ inline fun <T : Any> Response<T>.onFailure(action: (DataSourceError) -> Unit) {
 fun <RESPONSE : DomainMapper<INFO>, INFO : Any> Response<RESPONSE>.getData(): Result<INFO> {
     try {
         onSuccess {
-
+            Log.d("ramm", "result success")
             return Success(it.mapToDomainModel())
         }
-        onFailure { return Failure(it) }
+        onFailure {
+            Log.d("ramm", "result failure")
+            return Failure(it)
+        }
         return Failure(DataSourceError(Throwable(GENERAL_ERROR)))
     } catch (e: IOException) {
         return Failure(DataSourceError(Throwable(GENERAL_ERROR)))

@@ -14,6 +14,7 @@ import com.ramm.framework.data.mapper.DomainMapper
 data class PokemonDetailResponseData(
     val height: Int,
     val weight: Int,
+    val id: Int,
     val name: String,
     val sprites: SpritesResponseData,
     val types: List<TypesResponseData>,
@@ -22,6 +23,7 @@ data class PokemonDetailResponseData(
     override fun mapToDomainModel() = PokemonDetailUseCaseInfo(
         height = height,
         weight = weight,
+        id = id,
         name = name,
         sprites = sprites.mapToDomainModel(),
         types = types.map { it.mapToDomainModel() },

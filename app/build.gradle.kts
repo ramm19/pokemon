@@ -45,6 +45,19 @@ android {
         compose = true
         buildConfig = true
     }
+
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "androidx.test.ext" && requested.name == "junit") {
+                useVersion("1.2.1")
+                because("Forzar versión para evitar conflicto con restricciones transitivas")
+            }
+            if (requested.group == "androidx.test.espresso" && requested.name == "espresso-core") {
+                useVersion("3.6.1")
+                because("Forzar versión para evitar conflicto con restricciones transitivas")
+            }
+        }
+    }
 }
 
 dependencies {

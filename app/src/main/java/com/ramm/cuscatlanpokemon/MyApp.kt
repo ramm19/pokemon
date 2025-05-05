@@ -2,6 +2,7 @@ package com.ramm.cuscatlanpokemon
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import coil.Coil
 import coil.ImageLoader
 import coil.util.DebugLogger

@@ -7,12 +7,32 @@ import androidx.security.crypto.MasterKeys
 
 fun getEncryptSharedPreferences (
     context: Context,
-    file_name: String,
-    master_key_alias: String,
-): SharedPreferences = EncryptedSharedPreferences.create(
-    file_name,
-    MasterKeys.getOrCreate(getKeyGenParameterSpecAes(master_key_alias)),
-    context,
-    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-)
+    fileName: String,
+    masterKeyAlias: String,
+): SharedPreferences {
+    return try {
+        createEncryptedPrefs(context, fileName, masterKeyAlias)
+    } catch (e: Exception) {
+        return try {
+            context.deleteSharedPreferences(fileName)
+            createEncryptedPrefs(context, fileName, masterKeyAlias)
+        } catch (e: Exception) {
+            context.getSharedPreferences("${fileName}_fallback", Context.MODE_PRIVATE)
+        }
+    }
+}
+
+private fun createEncryptedPrefs(
+    context: Context,
+    fileName: String,
+    masterKeyAlias: String,
+): SharedPreferences {
+    val masterKey = MasterKeys.getOrCreate(getKeyGenParameterSpecAes(masterKeyAlias))
+    return EncryptedSharedPreferences.create(
+        fileName,
+        masterKey,
+        context,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+}
